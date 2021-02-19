@@ -1,0 +1,4 @@
+aws ec2 create-security-group --group-name DevRDSSecurityGroup --description "Dev RDS security group" --vpc-id ${VPC_ID}
+#{
+#    "GroupId": "sg-0c7785ee24398f7c4"
+#}

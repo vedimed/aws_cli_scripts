@@ -1,0 +1,49 @@
+-- Create Cluster
+1. Create Cluster with node group
+#./create_cluster.sh 
+2. Check the nodes using
+#kubectl get nodes
+3. Grab vpc-id by executing vpc.sh, copy value for VpcId key from result json and set to environment variable 
+./vpc.sh
+#export VPC_ID=vpc-080a075e579f94774
+
+
+-- Create Database Instances
+
+based on blog
+https://dev.to/bensooraj/accessing-amazon-rds-from-aws-eks-2pc3
+
+First We need db-subnet group
+
+1. Describe subnets (subnets are created when Cluster is created)
+#./show_subnet.sh
+2. Grab two subnet-id for two distinct AvailabilityZone, look for SubnetId key under required AvailabilityZone
+#"SubnetId": "subnet-08520bf0ea2201f02" zone:us-west-2a
+#"SubnetId": "subnet-07047b2db0639e02a" zone:us-west-2b
+3. Create DB Subnet Group
+#./db_subnet_group
+4. Create a VPC Security Group:  an instance level virtual firewall with rules to control inbound and outbound traffic.
+Check VPC_ID variable is set (from Step#3, Create Cluster section)
+#echo $VPC_ID
+#./db_vpc_security_group
+5. Grab GroupId key and set environment variable RDS_VPC_SECURITY_GROUP_ID
+#export RDS_VPC_SECURITY_GROUP_ID=sg-0c7785ee24398f7c4"
+6. Create DB Instance
+#./db_create_instance
+7. update RDS Security group to allow all ingress traffic from the EKS cluster to the RDS instance on port 3306
+Check RDS_VPC_SECURITY_GROUP_ID variable is set (from Step#5 above)
+#echo $RDS_VPC_SECURITY_GROUP_ID
+#./db_vpc_update_security_group
+8. Describe db instance to brab instance endpoint address ("DBInstances.Endpoint.Address")
+#./db_describe_instance
+modify mysql-service.yaml and replace value for key "externalName"
+8. Create mysql-service in EKS cluster
+#./db_create_mysql_service 
+9. Check We can connect from EKS cluster to mySQL Service
+./check_mysql_connection.sh
+ener below command, when you see command prompt as '#'
+nc mysql-service 3306
+
+You should see something like mysql password prompt (commond should not be spining)
+Control-C to come back to # prompt
+type exit on # prompt to exit busybox pod

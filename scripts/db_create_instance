@@ -1,0 +1,96 @@
+aws rds create-db-instance \
+  --db-name vedimeddev \
+  --db-instance-identifier devordsmyqldbinstance \
+  --allocated-storage 10 \
+  --db-instance-class db.t2.micro \
+  --engine mysql \
+  --engine-version "5.7.26" \
+  --master-username vedimed \
+  --master-user-password devdemo123 \
+  --no-publicly-accessible \
+  --vpc-security-group-ids ${RDS_VPC_SECURITY_GROUP_ID} \
+  --db-subnet-group-name "devdbsubnetgroup" \
+  --availability-zone us-west-2a \
+  --port 3306 
+#{
+#    "DBInstance": {
+#        "DBInstanceIdentifier": "devordsmyqldbinstance",
+#        "DBInstanceClass": "db.t2.micro",
+#        "Engine": "mysql",
+#        "DBInstanceStatus": "creating",
+#        "MasterUsername": "vedimed",
+#        "DBName": "vedimeddev",
+#        "AllocatedStorage": 10,
+#        "PreferredBackupWindow": "13:11-13:41",
+#        "BackupRetentionPeriod": 1,
+#        "DBSecurityGroups": [],
+#        "VpcSecurityGroups": [
+#            {
+#                "VpcSecurityGroupId": "sg-0c7785ee24398f7c4",
+#                "Status": "active"
+#            }
+#        ],
+#        "DBParameterGroups": [
+#            {
+#                "DBParameterGroupName": "default.mysql5.7",
+#                "ParameterApplyStatus": "in-sync"
+#            }
+#        ],
+#        "AvailabilityZone": "us-west-2a",
+#        "DBSubnetGroup": {
+#            "DBSubnetGroupName": "devdbsubnetgroup",
+#            "DBSubnetGroupDescription": "Dev DB Subnet Group",
+#            "VpcId": "vpc-080a075e579f94774",
+#            "SubnetGroupStatus": "Complete",
+#            "Subnets": [
+#                {
+#                    "SubnetIdentifier": "subnet-07047b2db0639e02a",
+#                    "SubnetAvailabilityZone": {
+#                        "Name": "us-west-2c"
+#                    },
+#                    "SubnetOutpost": {},
+#                    "SubnetStatus": "Active"
+#                },
+#                {
+#                    "SubnetIdentifier": "subnet-08520bf0ea2201f02",
+#                    "SubnetAvailabilityZone": {
+#                        "Name": "us-west-2a"
+#                    },
+#                    "SubnetOutpost": {},
+#                    "SubnetStatus": "Active"
+#                }
+#            ]
+#        },
+#        "PreferredMaintenanceWindow": "thu:09:50-thu:10:20",
+#        "PendingModifiedValues": {
+#            "MasterUserPassword": "****"
+#        },
+#        "MultiAZ": false,
+#        "EngineVersion": "5.7.26",
+#        "AutoMinorVersionUpgrade": true,
+#        "ReadReplicaDBInstanceIdentifiers": [],
+#        "LicenseModel": "general-public-license",
+#        "OptionGroupMemberships": [
+#            {
+#                "OptionGroupName": "default:mysql-5-7",
+#                "Status": "in-sync"
+#            }
+#        ],
+#        "PubliclyAccessible": false,
+#        "StorageType": "gp2",
+#        "DbInstancePort": 0,
+#        "StorageEncrypted": false,
+#        "DbiResourceId": "db-J3RD7EHN2PGDPEBLTTF4DHCNHM",
+#        "CACertificateIdentifier": "rds-ca-2019",
+#        "DomainMemberships": [],
+#        "CopyTagsToSnapshot": false,
+#        "MonitoringInterval": 0,
+#        "DBInstanceArn": "arn:aws:rds:us-west-2:478257420379:db:devordsmyqldbinstance",
+#        "IAMDatabaseAuthenticationEnabled": false,
+#        "PerformanceInsightsEnabled": false,
+#        "DeletionProtection": false,
+#        "AssociatedRoles": [],
+#        "TagList": [],
+#        "CustomerOwnedIpEnabled": false
+#    }
+#}
